@@ -20,6 +20,13 @@ __pycache__/
 *.swo
 
 # TODO: Students should add the following:
-# - Temporary files (*.tmp, *~)
-# - Output directories (results/, output/)
+# - Temporary files 
+*.tmp 
+*~
+# - Output directories 
+results/ 
+output/
 # - Any editor-specific backup files
+*.backup
+*.original
+*.save
