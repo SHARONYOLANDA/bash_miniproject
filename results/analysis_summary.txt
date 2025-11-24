@@ -1,0 +1,5 @@
+   ANALYSIS SUMMARY   
+Total sequences in FASTA: 35079
+High-quality scaffolds: 33
+Total protein entries: 856
+Run date/time: Tue Nov 25 00:12:05 EAT 2025
