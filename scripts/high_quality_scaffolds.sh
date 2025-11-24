@@ -1,29 +1,26 @@
 #!/usr/bin/bash
 
-#Identifies scaffolds meeting both criteria:
-min_length=10000
-min_coverage=5.0
+cd ../Data/
 
-echo "Filtering high-quality scaffolds: length >= $min_length, coverage >= $min_coverage"
+minimum_length=10000
+minimum_coverage=5.0
 
-#Counts how many scaffolds are high quality
-count=0
+# Overwrite previous results
+> ../results/high_quality_scaffolds.txt
 
-#Reading headers
-while read header
-do
-        #Extracting length and coverage
-        length=$(echo "$header" | cut -d'_' -f4)
-        coverage=$(echo "$header" | cut -d'_' -f6)
+length_list=$(grep ">" IP-004_S38_L001_scaffolds.fasta | cut -d'_' -f4) # Generating a list of the sequence lengths
 
-	# Compare coverage using bc (returns 1 if true)
-	coverage_check=$(echo "$coverage >= $min_coverage" | bc)
+for length in $length_list; do # Using a for loop to iterate over the length list
+        if [ "$length" -ge "$minimum_length" ]; then # comparisons on integers
+                cov=$(grep "length_$length" IP-004_S38_L001_scaffolds.fasta | cut -d'_' -f6)
+		if [ -n "$cov" ] && [ $(echo "$cov >= $minimum_coverage" | bc -l) -eq 1 ]; then # comparisons on float are different from integers
+			grep "length_$length" IP-004_S38_L001_scaffolds.fasta >> ../results/high_quality_scaffolds.txt
+		fi
+		
+        fi
+done
 
-    # To meet both length and coverage criteria
-        if [ "$length" -ge "$min_length" ] && [ "$coverage_check" -eq 1 ]; then
-        	echo "$header" >> ../results/high_quality_scaffolds.txt
-        	count=$((count +1))
-	fi
-done < <(grep "^>" ../Data/IP-004_S38_L001_scaffolds.fasta)
+sequence_count=$(cat ../results/high_quality_scaffolds.txt | wc -l)
 
-echo "Total high-quality scaffolds: $count"
+echo "Found $sequence_count sequences high quality scaffolds"
+
