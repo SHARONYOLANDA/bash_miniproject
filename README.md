@@ -1,11 +1,11 @@
 # Bash Mini-Project: Genomic Data Analysis
 
 ## Student Information
-**Name**: [SHARON YOLANDA PAMBA]
-**Student ID**: [MB300-OOO1/2024]
+**Name**: SHARON YOLANDA PAMBA
+**Student ID**: MB300-OOO1/2024
 **Course**: PUB 3127 - Computing for Biologists
-**Date Started**: [20/11/2025]
-**Date Completed**: [TODO: Date you completed the project]
+**Date Started**: 20/11/2025
+**Date Completed**: 25/11/2025
 
 ---
 
@@ -22,17 +22,32 @@ This project analyzes genomic scaffold data and protein database records using b
 
 ```
 bash_miniproject/
-├── Data/                          # Input data files
-│   ├── IP-004_S38_L001_scaffolds.fasta
-│   └── humchrx.txt
-├── scripts/                       # Bash scripts for analysis
-│   └── [TODO: List your scripts here as you create them]
-├── results/                       # Output files from analyses
-│   └── [TODO: List your result files here as you generate them]
-├── .gitignore                     # Git ignore rules
-├── ASSIGNMENT.md                  # Assignment instructions
-└── README.md                      # This file
-```
+├── ASSIGNMENT.md     # Assignment instructions
+├── Data         # Input data files
+│   ├── IP-004_S38_L001_scaffolds.fasta
+│   └── humchrx.txt
+├── README.md
+├── results      # Output files from analyses
+│   ├── analysis_summary.txt
+│   ├── filtered_sequences.txt
+│   ├── gene_names_sorted.txt
+│   ├── high_quality_scaffolds.txt
+│   ├── longest_sequence.txt
+│   ├── protein_count.txt
+│   ├── protein_search_results.txt
+│   ├── sequence_count.txt
+│   └── sequence_ids.txt
+└── scripts      # Bash scripts for analysis
+    ├── extract_genes.sh
+    ├── extract_headers.sh
+    ├── filter_by_length.sh
+    ├── high_quality_scaffolds.sh
+    ├── longest_sequence.sh
+    ├── protein_count.sh
+    ├── run_analysis.sh
+    └── search_proteins.sh
+
+4 directories, 21 files
 
 ---
 
@@ -56,7 +71,7 @@ The `Data/` directory contains:
 ### Setup
 1. Clone this repository:
    ```bash
-   git clone [YOUR_REPO_URL]
+   git clone [https://github.com/SHARONYOLANDA/bash_miniproject/blob/main/ASSIGNMENT.md]
    cd bash_miniproject
    ```
 
@@ -66,8 +81,6 @@ The `Data/` directory contains:
    ```
 
 ### Running the Scripts
-
-[TODO: Add detailed instructions for each script as you create them. Example format below:]
 
 #### Script 1: Extract Headers
 ```bash
@@ -111,7 +124,6 @@ The `Data/` directory contains:
 **Purpose**: Searches for proteins matching a keyword
 **Output**: `results/protein_search_results.txt` - Matching protein entries
 
-[TODO: Update the purpose and output descriptions based on your actual implementations]
 
 ### Running the Master Script
 ```bash
@@ -122,65 +134,68 @@ The `Data/` directory contains:
 - All result files from individual scripts
 - `results/analysis_summary.txt` - Summary of all analyses with counts and timestamp
 
-[TODO: Verify the above descriptions match your actual implementation]
 
 ---
 
 ## Analysis Results Summary
-
-[TODO: Fill this section in after completing your analyses. Answer these questions:]
+Total sequences in FASTA: 35079
+High-quality scaffolds: 33
+Total protein entries: 856
+Out of 35079 sequences, 267 had lengths ≥ 5000 bp.
+33 were high-quality scaffolds
 
 ### FASTA File Analysis
-- **Total number of sequences**: [TODO]
-- **Longest sequence**: [TODO: NODE_X with length and coverage]
-- **Number of sequences with length >= 5000**: [TODO]
-- **Number of high-quality scaffolds** (length >= 10000, coverage >= 5.0): [TODO]
+- **Total number of sequences**: 35079
+- **Longest sequence**: Longest sequence:NODE_1, Length:21257 bases, Coverage:6.323607
+- **Number of sequences with length >= 5000**: 267
+- **Number of high-quality scaffolds** (length >= 10000, coverage >= 5.0): 33
 
 ### Protein Database Analysis
-- **Total protein entries**: [TODO]
-- **Number of unique genes**: [TODO]
-- **Example protein search result** (e.g., for "kinase"): [TODO: number of matches]
+- **Total protein entries**: 856
+- **Number of unique genes**: 854
+- **Example protein search result** (e.g., for "kinase"): 34
 
 ### Key Findings
-[TODO: Write 2-3 sentences about interesting observations from your analysis]
+One of my observations was that the data set provided out of 35079 sequences only 33 were long enough to be considered high quality scaffolds. 
+The data set also had only 267 sequences with lengths longer than 5000. 
+Only 34 sequences had kinase protein during the protein search.
 
 ---
 
 ## Scripts Description
 
-[TODO: Provide a brief description of each script. Example format below:]
-
 | Script Name | Purpose | Key Commands Used |
 |-------------|---------|-------------------|
-| `extract_headers.sh` | Extract NODE identifiers from FASTA file | grep, cut |
-| `longest_sequence.sh` | Find the scaffold with the longest sequence | grep, sort, head |
-| `filter_by_length.sh` | Filter scaffolds by minimum length | grep, cut, [loops] |
-| `high_quality_scaffolds.sh` | Identify high-quality scaffolds | grep, cut, [conditionals] |
-| `extract_genes.sh` | Extract unique gene names from protein file | cut, sort, uniq |
-| `search_proteins.sh` | Search for proteins by keyword | grep |
-| `run_analysis.sh` | Master script that runs all analyses | [calls all other scripts] |
-
+| `extract_headers.sh` | Extract NODE identifiers from FASTA file | grep, cut, echo|
+| `longest_sequence.sh` | Find the scaffold with the longest sequence | grep, cut, sort, head, echo |
+| `filter_by_length.sh` | Filter scaffolds by minimum length | grep, cut, echo, wc, while and if loops |
+| `high_quality_scaffolds.sh` | Identify high-quality scaffolds | grep, cut, wc if loop conditionals |
+| `extract_genes.sh` | Extract unique gene names from protein file | grep, cut, sort, uniq, wc, echo |
+| `search_proteins.sh` | Search for proteins by keyword | grep, if loop, tail, wc, cat, echo |
+| `run_analysis.sh` | Master script that runs all analyses | if loop, echo |
+| `protein_count.sh` | # Counts protein entries | grep, tail, echo, if loop |
 ---
 
 ## Challenges and Solutions
 
-[TODO: Document any challenges you faced and how you solved them. This shows your problem-solving process. Example:]
+**Challenge 1**: I had trouble running the final analysis because some scripts in the scripts/ directory had incorrect paths, and i was using '>' therefore could not update the final results in the results files in the results directory after the first run of each script.
+**Solution**: I fixed this by correcting all script paths and appending outputs to the results file using '>>', which allowed the full analysis to complete successfully and update itself in my results directory file on the analsis. This was only possible after seeking some help from the internet after running it for at least two days without any luck.
 
-**Challenge 1**: [TODO: Describe a problem you encountered]
-**Solution**: [TODO: Describe how you solved it]
+**Challenge 2**: I also lost some data while trying to redirect outputs into my results directory files. This was due to the paths i was using when writing my commands.
+**Solution**: I ensured that i wrote the correct paths while writing my scripts in the initial scripts.
 
-**Challenge 2**: [TODO]
-**Solution**: [TODO]
-
+**Challenge 3**: Handling errors using 'if' statements and the '-f' flag when running the final analysis. running the final analysis was not that easy and i had to seek help from the internet a lot in order to understand which commands to use and what i was doing wrong. 
+**Solution**: i used the internet commands in order to run the final analysis.
+I also don't know how to stage.
 ---
 
 ## What I Learned
 
 [TODO: Write a brief reflection (3-5 sentences) about what you learned from this project. Consider:]
-- New bash commands or concepts you learned
-- How command-line tools can be useful for bioinformatics
-- Any insights about version control with Git
-- How this project relates to your research interests
+- New bash commands or concepts you learned : '-f flag' and using '&&' together
+- How command-line tools can be useful for bioinformatics : The command line can help me run analysis on biological sequences from Biological databases
+- Any insights about version control with Git : I have no insights.
+- How this project relates to your research interests : This will help me understand how to deal with large data sets during my research.
 
 ---
 
@@ -199,6 +214,7 @@ This project is for educational purposes as part of PUB 3127 coursework.
 ---
 
 ## Acknowledgments
-- **Instructor**: [TODO: Your instructor's name]
-- **Institution**: [TODO: Your university/institution name]
-- Data sources: [Sequencing data and UniProt database]
+- **Instructor**: Dr. Caleb Kibet
+- **Institution**: Pan African University Institute of Science, Technology and Innovation (PAUSTI)
+- Data sources: Sequencing data and UniProt database
+
